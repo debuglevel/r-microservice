@@ -29,11 +29,11 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '4.0.4'
 }
 
-group 'de.debuglevel.greeting'
+group 'de.debuglevel.markdown'
 
 // application plugin configuration
-applicationName = "Greeting Microservice"
-mainClassName = "de.debuglevel.greeting.rest.MainKt"
+applicationName = "Markdown Microservice"
+mainClassName = "de.debuglevel.markdown.rest.MainKt"
 
 repositories {
     jcenter()
@@ -71,8 +71,12 @@ dependencies {
     // JSON
     implementation 'com.google.code.gson:gson:2.8.5'
 
+    // Markdown
+    implementation 'com.atlassian.commonmark:commonmark:0.12.1'
+    
     // khttp (HTTP client)
-    //implementation 'khttp:khttp:0.10.1'
+    implementation 'khttp:khttp:0.1.0'
+    implementation 'com.github.kittinunf.fuel:fuel:2.0.1'
 
     // Template Engine
     //implementation 'com.sparkjava:spark-template-mustache:2.7.1'

@@ -1,4 +1,4 @@
-package de.debuglevel.greeting.rest
+package de.debuglevel.markdown.rest
 
 import com.google.gson.Gson
 

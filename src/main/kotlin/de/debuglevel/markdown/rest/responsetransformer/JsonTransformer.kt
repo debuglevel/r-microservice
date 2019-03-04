@@ -1,4 +1,4 @@
-package de.debuglevel.greeting.rest.responsetransformer
+package de.debuglevel.markdown.rest.responsetransformer
 
 import com.google.gson.GsonBuilder
 import mu.KotlinLogging
