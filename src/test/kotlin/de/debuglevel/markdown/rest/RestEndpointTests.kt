@@ -47,7 +47,7 @@ class RestEndpointTests {
         assertThat(response.statusCode).isGreaterThanOrEqualTo(100)
     }
 
-    fun String.toBase64(): String {
+    private fun String.toBase64(): String {
         return Base64.getEncoder().encode(this.toByteArray()).toString(Charset.defaultCharset())
     }
 
@@ -59,7 +59,7 @@ class RestEndpointTests {
                             [
                                 {
                                     "name": "test.md",
-                                    "base64content": "$base64"
+                                    "base64data": "$base64"
                                 }
                             ]
                         }

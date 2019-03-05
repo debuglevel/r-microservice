@@ -3,11 +3,11 @@ package de.debuglevel.markdown.rest.markdown
 import java.nio.charset.Charset
 import java.util.*
 
-data class FileDTO(val name: String, val base64content: String) {
-    val content: String
-        get() = base64content.fromBase64()
-}
+data class FileDTO(val name: String, val base64data: String) {
+    val asString: String
+        get() = asByteArray.toString(Charset.defaultCharset())
 
-fun String.fromBase64(): String {
-    return Base64.getDecoder().decode(this.toByteArray()).toString(Charset.defaultCharset())
+    val asByteArray: ByteArray
+        get() = Base64.getDecoder().decode(base64data.toByteArray())
+
 }

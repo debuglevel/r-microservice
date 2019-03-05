@@ -1,6 +1,6 @@
 package de.debuglevel.markdown.domain.markdown
 
-import de.debuglevel.markdown.rest.markdown.MarkdownDTO
+import de.debuglevel.markdown.rest.markdown.FileTransferDTO
 import de.debuglevel.markdown.rest.markdown.StoredMarkdownDTO
 import java.util.*
 
@@ -11,7 +11,7 @@ object DocumentStorage {
         return documents[uuid] ?: throw DocumentNotFoundException(uuid)
     }
 
-    fun add(markdown: MarkdownDTO): StoredMarkdownDTO {
+    fun add(markdown: FileTransferDTO): StoredMarkdownDTO {
         val uuid = UUID.randomUUID()
         val markdownWithUUID = StoredMarkdownDTO(markdown.files.first(), uuid)
         documents[uuid] = markdownWithUUID

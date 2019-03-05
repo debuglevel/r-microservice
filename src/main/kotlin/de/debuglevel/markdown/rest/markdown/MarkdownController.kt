@@ -20,7 +20,7 @@ object MarkdownController {
             try {
                 // Note: not using response.raw().outputStream because this complicates setting headers etc.
                 val outputStream = ByteArrayOutputStream()
-                val markdown = DocumentStorage.get(UUID.fromString(id)).file.content
+                val markdown = DocumentStorage.get(UUID.fromString(id)).file.asString
                 HtmlConverter.convert(markdown, outputStream)
 
                 type("text/html")
@@ -40,7 +40,7 @@ object MarkdownController {
 
             try {
                 val outputStream = ByteArrayOutputStream()
-                val markdown = DocumentStorage.get(UUID.fromString(id)).file.content
+                val markdown = DocumentStorage.get(UUID.fromString(id)).file.asString
                 PlaintextConverter.convert(markdown, outputStream)
 
                 type(contentType = "text/plain")
@@ -62,7 +62,7 @@ object MarkdownController {
                 type("application/json")
                 "{\"message\":\"${request.contentType()} is not supported.\"}"
             } else {
-                val markdownDTO = Gson().fromJson(request.body(), MarkdownDTO::class.java)
+                val markdownDTO = Gson().fromJson(request.body(), FileTransferDTO::class.java)
 
                 val markdownWithUUID = DocumentStorage.add(markdownDTO)
                 status(201)
@@ -71,6 +71,4 @@ object MarkdownController {
             }
         }
     }
-
-    class UnsupportedContentTypeException(contentType: String) : Exception("Content-Type $contentType not supported.")
 }
