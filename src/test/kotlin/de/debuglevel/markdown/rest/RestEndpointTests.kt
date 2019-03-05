@@ -135,6 +135,32 @@ class RestEndpointTests {
             assertThat(getResult.get()).isEqualTo(testData.expected)
         }
 
+        @ParameterizedTest
+        @MethodSource("markdownToHtmlProvider", "markdownToPlaintextProvider")
+        fun `converts to JSON`(testData: HtmlConverterTests.MarkdownTestData) {
+            // Arrange
+            val json = getJsonWithOneFile(testData)
+            val (postRequest, postResponse, postResult) =
+                Fuel.post("http://localhost:4567/documents/")
+                    .jsonBody(json)
+                    .responseString()
+            val (uuid, postError) = postResult
+
+            // Act
+            val (getRequest, getResponse, getResult) =
+                Fuel.get("http://localhost:4567/documents/$uuid")
+                    .header(Headers.ACCEPT, "application/json")
+                    .responseString()
+
+            // Assert
+            assertThat(getResponse.statusCode).isEqualTo(200)
+            assertThat(getResponse.headers["Content-Type"]).contains("application/json")
+            assertThat(JsonUtils.isJSONValid(getResult.get())).isTrue()
+            assertThat(getResult.get()).contains(testData.expected.toBase64())
+            assertThat(getResult.get()).contains(".html")
+            assertThat(getResult.get()).contains(".txt")
+        }
+
         fun markdownToHtmlProvider() = HtmlConverterTests().markdownToHtmlProvider()
         fun markdownToPlaintextProvider() = HtmlConverterTests().markdownToPlaintextProvider()
     }

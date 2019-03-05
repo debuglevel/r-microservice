@@ -5,6 +5,7 @@ import de.debuglevel.markdown.domain.markdown.Converter
 import de.debuglevel.markdown.domain.markdown.DocumentStorage
 import de.debuglevel.markdown.domain.markdown.HtmlConverter
 import de.debuglevel.markdown.domain.markdown.PlaintextConverter
+import de.debuglevel.markdown.rest.responsetransformer.JsonTransformer
 import mu.KotlinLogging
 import spark.kotlin.RouteHandler
 import java.io.ByteArrayOutputStream
@@ -45,6 +46,46 @@ object MarkdownController {
 
                 type(contentType = "text/plain")
                 outputStream
+            } catch (e: Converter.ConversionException) {
+                logger.info("Document '$id' could not be converted: ", e.message)
+                type("application/json")
+                status(400)
+                "{\"message\":\"document '$id' could not be converted: ${e.message}\"}"
+            }
+        }
+    }
+
+    fun String.toBase64() = Base64.getEncoder().encodeToString(this.toByteArray())
+    fun ByteArray.toBase64() = Base64.getEncoder().encodeToString(this)
+
+    fun getOneJson(): RouteHandler.() -> Any {
+        return {
+            val id = params(":id")
+
+            val markdown = DocumentStorage.get(UUID.fromString(id)).file.asString
+
+            val plaintextBase64 = ({
+                val outputStream = ByteArrayOutputStream()
+                PlaintextConverter.convert(markdown, outputStream)
+                outputStream.toByteArray().toBase64()
+            })()
+
+            val htmlBase64 = ({
+                val outputStream = ByteArrayOutputStream()
+                HtmlConverter.convert(markdown, outputStream)
+                outputStream.toByteArray().toBase64()
+            })()
+
+            try {
+                val files = FileTransferDTO(
+                    arrayOf(
+                        FileDTO("$id.txt", plaintextBase64),
+                        FileDTO("$id.html", htmlBase64)
+                    )
+                )
+
+                type(contentType = "application/json")
+                JsonTransformer.render(files)
             } catch (e: Converter.ConversionException) {
                 logger.info("Document '$id' could not be converted: ", e.message)
                 type("application/json")

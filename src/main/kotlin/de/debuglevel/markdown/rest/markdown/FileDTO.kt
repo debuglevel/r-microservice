@@ -3,7 +3,10 @@ package de.debuglevel.markdown.rest.markdown
 import java.nio.charset.Charset
 import java.util.*
 
-data class FileDTO(val name: String, val base64data: String) {
+data class FileDTO(
+    val name: String,
+    val base64data: String
+) {
     val asString: String
         get() = asByteArray.toString(Charset.defaultCharset())
 

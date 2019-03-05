@@ -40,6 +40,8 @@ class RestEndpoint {
                     get("/", "text/html", MarkdownController.getOneHtml())
                     get("", "text/plain", MarkdownController.getOnePlaintext())
                     get("/", "text/plain", MarkdownController.getOnePlaintext())
+                    get("", "application/json", MarkdownController.getOneJson())
+                    get("/", "application/json", MarkdownController.getOneJson())
                 }
             }
         }
