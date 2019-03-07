@@ -13,7 +13,11 @@ COPY . /src/
 RUN ./gradlew build
 
 ## Final image
-FROM openjdk:8-jre-alpine
+FROM miktex/miktex
+RUN apt-get update && \
+    apt-get install -y openjdk-8-jre-headless && \
+    rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 COPY --from=builder /src/build/libs/*.jar /app/microservice.jar
 
