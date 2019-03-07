@@ -32,8 +32,8 @@ plugins {
 group 'de.debuglevel.markdown'
 
 // application plugin configuration
-applicationName = "Markdown Microservice"
-mainClassName = "de.debuglevel.markdown.rest.MainKt"
+applicationName = "LaTeX Microservice"
+mainClassName = "de.debuglevel.latex.rest.MainKt"
 
 repositories {
     jcenter()
