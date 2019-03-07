@@ -1,4 +1,4 @@
-package de.debuglevel.markdown.rest
+package de.debuglevel.latex.rest
 
 /**
  * Application entry point.

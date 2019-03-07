@@ -1,35 +1,35 @@
-package de.debuglevel.markdown.domain.markdown
+package de.debuglevel.latex.domain.latex
 
 import mu.KotlinLogging
 import org.commonmark.parser.Parser
-import org.commonmark.renderer.html.HtmlRenderer
+import org.commonmark.renderer.text.TextContentRenderer
 import java.io.OutputStream
 import java.io.OutputStreamWriter
 
 /**
- * Converts markdown to HTML
+ * Converts markdown to Plaintext
  */
-object HtmlConverter : Converter {
+object PlaintextConverter : Converter {
     private val logger = KotlinLogging.logger {}
 
     /**
-     * Convert the given markdown code to HTML
+     * Convert the given markdown code to Plaintext
      *
      * @param markdown markdown code
-     * @return the generated HTML
+     * @return the generated Plaintext
      */
     override fun convert(markdown: String, outputStream: OutputStream) {
-        logger.debug { "Converting Markdown to HTML..." }
+        logger.debug { "Converting Markdown to Plaintext..." }
 
         val outputStreamWriter = OutputStreamWriter(outputStream)
 
         val parser = Parser.builder().build()
         val document = parser.parse(markdown)
-        val renderer = HtmlRenderer.builder().build()
+        val renderer = TextContentRenderer.builder().build()
         renderer.render(document, outputStreamWriter)
 
         outputStreamWriter.close()
 
-        logger.debug { "Converting Markdown to HTML done." }
+        logger.debug { "Converting Markdown to Plaintext done." }
     }
 }

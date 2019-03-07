@@ -1,6 +1,6 @@
-package de.debuglevel.markdown.rest
+package de.debuglevel.latex.rest
 
-import de.debuglevel.markdown.rest.markdown.MarkdownController
+import de.debuglevel.latex.rest.latex.MarkdownController
 import de.debuglevel.microservices.utils.apiversion.apiVersion
 import de.debuglevel.microservices.utils.logging.buildRequestLog
 import de.debuglevel.microservices.utils.logging.buildResponseLog

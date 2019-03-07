@@ -1,9 +1,9 @@
-package de.debuglevel.markdown.rest
+package de.debuglevel.latex.rest
 
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.Headers
 import com.github.kittinunf.fuel.core.extensions.jsonBody
-import de.debuglevel.markdown.domain.markdown.HtmlConverterTests
+import de.debuglevel.latex.domain.latex.HtmlConverterTests
 import de.debuglevel.microservices.utils.spark.SparkTestUtils
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatCode

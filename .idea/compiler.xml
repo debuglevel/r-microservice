@@ -4,6 +4,8 @@
     <bytecodeTargetLevel>
       <module name="de.debuglevel.markdown.greeting-microservice.main" target="1.8" />
       <module name="de.debuglevel.markdown.greeting-microservice.test" target="1.8" />
+      <module name="de.debuglevel.markdown.markdown-microservice.main" target="1.8" />
+      <module name="de.debuglevel.markdown.markdown-microservice.test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -1,4 +1,4 @@
-package de.debuglevel.markdown.rest
+package de.debuglevel.latex.rest
 
 import com.natpryce.konfig.Configuration
 import com.natpryce.konfig.ConfigurationProperties

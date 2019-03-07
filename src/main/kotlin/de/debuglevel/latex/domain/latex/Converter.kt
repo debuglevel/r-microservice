@@ -1,4 +1,4 @@
-package de.debuglevel.markdown.domain.markdown
+package de.debuglevel.latex.domain.latex
 
 import java.io.OutputStream
 

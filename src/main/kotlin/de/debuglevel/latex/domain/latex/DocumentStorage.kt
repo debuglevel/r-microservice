@@ -1,7 +1,7 @@
-package de.debuglevel.markdown.domain.markdown
+package de.debuglevel.latex.domain.latex
 
-import de.debuglevel.markdown.rest.markdown.FileTransferDTO
-import de.debuglevel.markdown.rest.markdown.StoredMarkdownDTO
+import de.debuglevel.latex.rest.latex.FileTransferDTO
+import de.debuglevel.latex.rest.latex.StoredMarkdownDTO
 import java.util.*
 
 object DocumentStorage {

@@ -1,11 +1,11 @@
-package de.debuglevel.markdown.rest.markdown
+package de.debuglevel.latex.rest.latex
 
 import com.google.gson.Gson
-import de.debuglevel.markdown.domain.markdown.Converter
-import de.debuglevel.markdown.domain.markdown.DocumentStorage
-import de.debuglevel.markdown.domain.markdown.HtmlConverter
-import de.debuglevel.markdown.domain.markdown.PlaintextConverter
-import de.debuglevel.markdown.rest.responsetransformer.JsonTransformer
+import de.debuglevel.latex.domain.latex.Converter
+import de.debuglevel.latex.domain.latex.DocumentStorage
+import de.debuglevel.latex.domain.latex.HtmlConverter
+import de.debuglevel.latex.domain.latex.PlaintextConverter
+import de.debuglevel.latex.rest.responsetransformer.JsonTransformer
 import mu.KotlinLogging
 import spark.kotlin.RouteHandler
 import java.io.ByteArrayOutputStream

@@ -1,4 +1,4 @@
-package de.debuglevel.markdown.rest
+package de.debuglevel.latex.rest
 
 import de.debuglevel.microservices.utils.spark.SparkTestUtils
 import org.assertj.core.api.Assertions
