@@ -1,6 +1,6 @@
 package de.debuglevel.latex.rest
 
-import de.debuglevel.latex.rest.latex.MarkdownController
+import de.debuglevel.latex.rest.latex.LatexController
 import de.debuglevel.microservices.utils.apiversion.apiVersion
 import de.debuglevel.microservices.utils.logging.buildRequestLog
 import de.debuglevel.microservices.utils.logging.buildResponseLog
@@ -33,15 +33,11 @@ class RestEndpoint {
         apiVersion("1", true)
         {
             path("/documents") {
-                post("/", function = MarkdownController.postOne())
+                post("/", function = LatexController.postOne())
 
                 path("/:id") {
-                    get("", "text/html", MarkdownController.getOneHtml())
-                    get("/", "text/html", MarkdownController.getOneHtml())
-                    get("", "text/plain", MarkdownController.getOnePlaintext())
-                    get("/", "text/plain", MarkdownController.getOnePlaintext())
-                    get("", "application/json", MarkdownController.getOneJson())
-                    get("/", "application/json", MarkdownController.getOneJson())
+                    get("", "application/json", LatexController.getOneJson())
+                    get("/", "application/json", LatexController.getOneJson())
                 }
             }
         }
