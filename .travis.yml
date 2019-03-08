@@ -1,0 +1,58 @@
+language: java
+jdk:
+  - openjdk8
+
+before_install:
+  - chmod +x gradlew
+  - chmod +x gradle/wrapper/gradle-wrapper.jar
+
+script:
+  - ./gradlew build
+
+notifications:
+  email: false
+
+# If releases are deployed on every commit (not only on tags, i.e. deploy.on.tags=false), a tag is needed nevertheless.
+# This creates a custom tag containing a timestamp, as Travis CI would tag it like "untagged-RANDOMHEX".
+# With deploy.on.tags=true, this section is not needed.
+#before_deploy:
+#  - git config --local user.name "Marc Kohaupt (Travis CI)"
+#  - git config --local user.email "debuglevel@gmail.com"
+#  - git tag "$(date +'%Y-%m-%d_%H-%M-%S')_$(git log --format=%h -1)"
+
+# See https://docs.travis-ci.com/user/deployment/releases
+deploy:
+  - provider: releases
+
+    # Set up via https://docs.travis-ci.com/user/deployment/releases#authenticating-with-an-oauth-token; keep a copy of .travis.yml, use "travis setup releases", extract the api_key and use it in your copy of .travis.yml
+    api_key:
+      secure: pCnnajAB9RdWock4SYxk1GqlpstaTUVveFue22I30UShoL+rWC01lNUUD3EvKcYEhKqeAre+Q+M1dMu8dSgVHIIh8R7LKY32x74rdyMmeJOXpm6Xf4WgO4eLwxhrUK8MWu90zHLMbN+2uMJGhDfPMZk08a+zfqrl4qNi+PpemLn8OpqNMq8uF0wlOxLwbW1n/Z9Y6GKvUWhtF1PJZiFZ3emJN0mEEeDkEz2uKfH9gQX4WTxwMIWqrOp4xmvYSUS9E1XzXLhvXuhsCh1M551LponOw0HWq1/li5FTsctP7z4rxlIdy7CGGP/P/oR6d2J8qL6wEJ5E2V4H5wC+fCVDt7TvGet3qB1Cz6aMAlLFpxiYB/r5phM102rw0PcxxeLe9Ju90gKP82pgP7JPNC6tXFPjHxEBpirh38bhfSV/dGHa8Gt0JQ2ZU6z6jbBjbFh+D8WU5Mi7L/s6cuM6Ezltn0xgy3wRf0rkAKMLKkrs7FYHSn+sVRPgWrRec5KZR1UxqYu0F+9ZAQPZWgLKtGym3ACgF5XWOWWD9U93y1IgLWOzkFs/eqd89/xQXMH9uzEl+viD02XsKDUdRhNDjYF8PH58bhH6Yr3ZXZMFhCsf5YbXh/QBVOYhmmBSnfLkGGSZUJ9vlgqyTAp9Y6yGGkLp6kuiTNuyHzgPOcLvpCiDz24=
+
+    file_glob: true
+    file:
+      - "**/build/libs/*.jar"
+      - "**/build/distributions/*shadow*.tar"
+
+    skip_cleanup: true
+
+    # Only deploy on certain conditions: https://docs.travis-ci.com/user/deployment/#Conditional-Releases-with-on%3A
+    on:
+      # Only deploy commits of "master" branch
+      #branch: master
+
+      # true: only deploy release if commit is tagged
+      # false: only deploy release if commit is not tagged
+      # If "tags" condition is present, the "branch" condition is ignored
+      # If "tags" condition is not present, "branch" condition is considered
+      tags: true
+
+#  # See https://docs.travis-ci.com/user/deployment/heroku/
+#  - provider: heroku
+#    api_key:
+#      secure: EFQlSfYNhNxCm4oIxvKP06vc8RwCz80P1Zoe1msKARqqqee6vG0A9Qwr/T/RViCxsPXhvSxFe/pWgrVC++CVBY1PH8RuMxE7lMqh0+f6zsT4R0Xg9Tq5lyxKLjhPGt+aFAt+Z2ajiIyev/hzpDa6qhhFLGpY6lIli4HhRauk+rlec0D2Ca7vVqKNCbI/TG2V7YE3r/dm5KXipg//Xq8EApji4bQtyUbQfXhfW4s5ZIwOOeRlOHNLhhF+vOYuBYICWrpyKrmctoiqc2z/H+IuT+sFOkebSfCx/DIyjzVMN6pDPVbYH9Il90f/de92eBbZXyiOBmFoaYjPMku3lhppZl9hlO2bJXL3jx84nt/JOfd7kh1tglAD0FYY081wrmYxM4SoD7bJXitSMDtB4kBrlsKSwBUZX6eXi99c30aQeb1GbwF+0Oa/ptgsr/klqJr80+gF/jhez5ykjF1VUeZSuhYDi9BrbXRK0jRNDaOKm8Yxmr00M+BEilwJC1mnypSbT7eEd7zk9tz2q2u7wUBHMArORQqi4icjJnDYvRwyiFyBeS8P/uMFDsFPRHUihYH320/TUM1SBc3QRJ4sy7RnANcqf+9k37xOVRSMFqpWVlekvZYTx0HA5dCHLleRocHDQ7CYOsCZQvtfVQLDwlCk0KbW5WqW4pieMgeY8/c9ykw=
+#    app: greeting-microservice
+#    # build on heroku can be initialized by its Build API (default) or by a git push
+#    #strategy: git
+#    skip_cleanup: true
+#    on:
+#      branch: master
