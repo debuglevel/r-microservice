@@ -1,0 +1,12 @@
+{
+  "files": [
+     {
+        "name": "main.R",
+        "base64data": "cGVvcGxlID0gcmVhZC5jc3YyKCJpbnB1dC9wZW9wbGUuY3N2IiwgaGVhZGVyID0gVFJVRSkNCnBlb3BsZSRibWkgPC0gcGVvcGxlJG1hc3MvKHBlb3BsZSRzaXplXjIpDQp3cml0ZS5jc3YyKHBlb3BsZSwgIm91dHB1dC9wZW9wbGUuY3N2Iiwgcm93Lm5hbWVzID0gRkFMU0Up"
+     },
+     {
+        "name": "input/people.csv",
+        "base64data": "aWQ7bmFtZTttYXNzO3NpemUNCjE7QWxleDs2NTsxLDY2DQoyO0JlcnRoYTs3NDsxLDY5DQozO0NsYXVkZTs1NTsxLDU3DQo0O0Rvcm90aGVhOzg2OzEsNzMNCg=="
+     }
+  ]
+}

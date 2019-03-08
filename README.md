@@ -1,11 +1,11 @@
-# LaTeX Microservice
-This is a simple REST microservice to compile LaTeX documents.
+# R Microservice
+This is a simple REST microservice to process R documents.
 
 # HTTP API
-Documents have to be POSTed first to the microservice before you can GET them.
+Analyses have to be POSTed first to the microservice before you can GET their results. It is assumed that the R script places its results in a "output" directory.
  
 ## Add document
-To POST a document, create a JSON file which contains all necessary files. The files are described by their name (may contain a directory) and their Base64 encoded data.
+To POST an analysis, create a JSON file which contains all necessary files. The files are described by their name (may contain a directory) and their Base64 encoded data.
 
 We will upload two files:
 ```
@@ -79,3 +79,17 @@ $ curl -X GET -H "Content-Type: application/json" -H "Accept: application/json" 
   ],
   "output": "This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.6980)\nentering extended mode\n(main.tex\nLaTeX2e <2018-12-01>\n(/miktex/.miktex/texmfs/install/tex/latex/base/article.cls\nDocument Class: article 2018/09/03 v1.4i Standard LaTeX document class\n(/miktex/.miktex/texmfs/install/tex/latex/base/size10.clo))\nNo file main.aux.\n(test/test.tex) [1{/miktex/.miktex/texmfs/data/pdftex/config/pdftex.map}]\n(/tmp/latex-microservice7693549835677115715/output/main.aux\n(/tmp/latex-microservice7693549835677115715/output/test/test.aux)) )</usr/local\n/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmr10.pfb>\nOutput written on /tmp/latex-microservice7693549835677115715/output/main.pdf (1\n page, 11466 bytes).\nTranscript written on /tmp/latex-microservice7693549835677115715/output/main.lo\ng.\n"
 ```
+
+# Configuration
+## main file
+By default, the microservice will execute the uploaded `main.R` file. If a built-in R file should be executed, the configuration key `r.mainfile` (or environment variable `R_MAINFILE`) can be set.
+```
+$ cat configuration.properties
+r.mainfile=/app/master.R
+``` 
+With Docker, this file (and further files) can be easily provided by extending the `r-microservice` docker image. (Also see the `examples` directory.)
+
+# Security
+Be aware that the default configuration allows to execute any R file, which may contain malicious code.
+
+If the microservice is used to execute always the same R script, it might be a good idea to provide a static R file instead of uploading it (see configuration of `r.mainfile` above).
