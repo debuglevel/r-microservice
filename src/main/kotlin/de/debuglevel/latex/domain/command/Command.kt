@@ -10,20 +10,28 @@ class Command(
 ) {
     private val logger = KotlinLogging.logger {}
 
-    fun run(): String {
+    fun run(): CommandResult {
         logger.debug { "Running command '$command'..." }
 
         val parts = command.split("\\s".toRegex())
-        val process = ProcessBuilder(*parts.toTypedArray())
+        val processBuilder = ProcessBuilder(*parts.toTypedArray())
             .directory(workingDirectory.toFile())
             .redirectOutput(ProcessBuilder.Redirect.PIPE)
             .redirectError(ProcessBuilder.Redirect.PIPE)
-            .start()
 
-        process.waitFor(60, TimeUnit.MINUTES)
+        val startTime = System.currentTimeMillis()
+        val process = processBuilder.start()
+        process.waitFor(300, TimeUnit.SECONDS)
+        val durationMilliseconds = System.currentTimeMillis() - startTime
 
-        logger.debug { "Running command '$command' done." }
+        val commandResult = CommandResult(
+            process.exitValue(),
+            durationMilliseconds,
+            process.inputStream.bufferedReader().readText()
+        )
 
-        return process.inputStream.bufferedReader().readText()
+        logger.debug { "Running command '$command' finished: $commandResult" }
+
+        return commandResult
     }
 }

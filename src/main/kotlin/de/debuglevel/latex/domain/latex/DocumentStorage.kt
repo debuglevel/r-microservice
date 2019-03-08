@@ -1,6 +1,6 @@
 package de.debuglevel.latex.domain.latex
 
-import de.debuglevel.latex.rest.latex.FileTransferDTO
+import de.debuglevel.latex.rest.latex.RequestFileTransferDTO
 import de.debuglevel.latex.rest.latex.StoredFileTransferDTO
 import mu.KotlinLogging
 import java.nio.file.Files
@@ -16,6 +16,7 @@ object DocumentStorage {
         logger.debug { "Getting data for ID '$uuid' from storage..." }
 
         val temporaryDirectory = Files.createTempDirectory("latex-microservice")
+        logger.debug { "Using temporary directory $temporaryDirectory" }
 
         val storedFileTransferDTO =
             documents[uuid]?.copy(path = temporaryDirectory) ?: throw DocumentNotFoundException(uuid)
@@ -35,14 +36,14 @@ object DocumentStorage {
             }
 
             val file = path.toFile()
-            logger.debug { "Writing files to temporary directory: ${file.absolutePath}" }
+            logger.debug { "Writing file: '${file.absolutePath}'..." }
             file.writeBytes(it.asByteArray)
         }
 
         return storedFileTransferDTO
     }
 
-    fun add(fileTransferDto: FileTransferDTO): StoredFileTransferDTO {
+    fun add(fileTransferDto: RequestFileTransferDTO): StoredFileTransferDTO {
         val uuid = UUID.randomUUID()
         val markdownWithUUID = StoredFileTransferDTO(fileTransferDto.files, uuid, null)
         documents[uuid] = markdownWithUUID

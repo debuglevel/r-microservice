@@ -1,8 +1,10 @@
 package de.debuglevel.latex.domain.command
 
-import java.nio.file.Path
-
 data class CommandResult(
-    val output: String,
-    val files: Array<Path>
-)
+    val exitValue: Int,
+    val durationMilliseconds: Long,
+    val output: String
+) {
+    val succesful
+        get() = exitValue == 0
+}

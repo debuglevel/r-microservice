@@ -1,37 +1,52 @@
 package de.debuglevel.latex.domain.latex
 
 import de.debuglevel.latex.domain.command.Command
-import de.debuglevel.latex.domain.command.CommandResult
 import mu.KotlinLogging
+import java.nio.file.Files
 import java.nio.file.Path
+import kotlin.streams.toList
 
 /**
- * Compiles LaTex to PDF
+ * Compiles LaTeX to PDF
  */
 object PdfCompiler {
     private val logger = KotlinLogging.logger {}
 
     /**
-     * Convert the given LaTeX to PDF
+     * Compile the given LaTeX to PDF
      */
-    fun compile(workingDirectory: Path): CommandResult {
+    fun compile(workingDirectory: Path): CompilerResult {
         return try {
             logger.debug { "Compiling LaTeX to PDF..." }
 
-            val output = Command("pdflatex -interaction=nonstopmode main.tex", workingDirectory).run()
-            val files = arrayOf<Path>(workingDirectory.resolve("main.pdf"))
+            val commandResult =
+                Command("pdflatex -interaction=nonstopmode -output-directory=output main.tex", workingDirectory).run()
 
-            val commandResult = CommandResult(output, files)
+            val files = Files.walk(workingDirectory.resolve("output"))
+                .filter { Files.isRegularFile(it) }
+                .peek { logger.debug { "File found in output directory: '$it' (${it.toAbsolutePath()})" } }
+                .toList()
+                .toTypedArray()
+
+            logger.debug { "Number of files in output directory: ${files.size}" }
+
+            val compilerResult = CompilerResult(
+                commandResult.succesful,
+                commandResult.exitValue,
+                commandResult.durationMilliseconds,
+                files,
+                commandResult.output
+            )
 
             logger.debug { "Compiling LaTeX to PDF done." }
-            logger.debug { "pdflatex output:\n$output" }
 
-            commandResult
+            compilerResult
         } catch (e: Exception) {
+            // this exception is NOT raised if the exit value is != 0
             logger.error(e) { "Compiling LaTeX to PDF failed" }
             throw CommandException("Compiling LaTeX to PDF failed")
         }
     }
 
-    class CommandException(s: String) : Exception()
+    class CommandException(s: String) : Exception(s)
 }

@@ -1,7 +1,7 @@
 package de.debuglevel.latex.domain.latex
 
 import de.debuglevel.latex.rest.latex.FileDTO
-import de.debuglevel.latex.rest.latex.FileTransferDTO
+import de.debuglevel.latex.rest.latex.RequestFileTransferDTO
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.assertThrows
@@ -17,7 +17,7 @@ class DocumentStorageTests {
     fun `prevents directory traversal attack`(testData: FilenameTestData) {
         // Arrange
         val storedFileTransferDTO = DocumentStorage.add(
-            FileTransferDTO(
+            RequestFileTransferDTO(
                 arrayOf(FileDTO(testData.value, "Zm9vYmFy"))
             )
         )
@@ -31,7 +31,7 @@ class DocumentStorageTests {
     fun `allow valid paths`(testData: FilenameTestData) {
         // Arrange
         val storedFileTransferDTO = DocumentStorage.add(
-            FileTransferDTO(
+            RequestFileTransferDTO(
                 arrayOf(FileDTO(testData.value, "Zm9vYmFy"))
             )
         )
