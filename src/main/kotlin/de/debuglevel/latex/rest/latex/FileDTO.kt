@@ -12,5 +12,4 @@ data class FileDTO(
 
     val asByteArray: ByteArray
         get() = Base64.getDecoder().decode(base64data.toByteArray())
-
 }

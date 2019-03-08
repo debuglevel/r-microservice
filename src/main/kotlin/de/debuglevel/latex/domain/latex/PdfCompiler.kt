@@ -11,18 +11,23 @@ import kotlin.streams.toList
  */
 object PdfCompiler {
     private val logger = KotlinLogging.logger {}
+    const val outputDirectory = "output"
 
     /**
-     * Compile the given LaTeX to PDF
+     * Compile the "main.tex" LaTeX file in the working directory to PDF.
+     * The output will be placed in the directory specified in the 'outputDirectory' constant.
      */
     fun compile(workingDirectory: Path): CompilerResult {
         return try {
             logger.debug { "Compiling LaTeX to PDF..." }
 
             val commandResult =
-                Command("pdflatex -interaction=nonstopmode -output-directory=output main.tex", workingDirectory).run()
+                Command(
+                    "pdflatex -interaction=nonstopmode -output-directory=$outputDirectory main.tex",
+                    workingDirectory
+                ).run()
 
-            val files = Files.walk(workingDirectory.resolve("output"))
+            val files = Files.walk(workingDirectory.resolve(outputDirectory))
                 .filter { Files.isRegularFile(it) }
                 .peek { logger.debug { "File found in output directory: '$it' (${it.toAbsolutePath()})" } }
                 .toList()
@@ -30,16 +35,9 @@ object PdfCompiler {
 
             logger.debug { "Number of files in output directory: ${files.size}" }
 
-            val compilerResult = CompilerResult(
-                commandResult.succesful,
-                commandResult.exitValue,
-                commandResult.durationMilliseconds,
-                files,
-                commandResult.output
-            )
+            val compilerResult = CompilerResult(commandResult, files)
 
             logger.debug { "Compiling LaTeX to PDF done." }
-
             compilerResult
         } catch (e: Exception) {
             // this exception is NOT raised if the exit value is != 0
@@ -48,5 +46,5 @@ object PdfCompiler {
         }
     }
 
-    class CommandException(s: String) : Exception(s)
+    class CommandException(message: String) : Exception(message)
 }

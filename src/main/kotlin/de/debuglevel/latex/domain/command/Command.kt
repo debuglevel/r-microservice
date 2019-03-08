@@ -5,8 +5,8 @@ import java.nio.file.Path
 import java.util.concurrent.TimeUnit
 
 class Command(
-    private val command: String,
-    private val workingDirectory: Path
+    val command: String,
+    val workingDirectory: Path
 ) {
     private val logger = KotlinLogging.logger {}
 
@@ -25,6 +25,7 @@ class Command(
         val durationMilliseconds = System.currentTimeMillis() - startTime
 
         val commandResult = CommandResult(
+            this,
             process.exitValue(),
             durationMilliseconds,
             process.inputStream.bufferedReader().readText()
