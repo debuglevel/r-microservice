@@ -4,8 +4,12 @@
     <bytecodeTargetLevel>
       <module name="de.debuglevel.markdown.greeting-microservice.main" target="1.8" />
       <module name="de.debuglevel.markdown.greeting-microservice.test" target="1.8" />
+      <module name="de.debuglevel.markdown.latex-microservice.main" target="1.8" />
+      <module name="de.debuglevel.markdown.latex-microservice.test" target="1.8" />
       <module name="de.debuglevel.markdown.markdown-microservice.main" target="1.8" />
       <module name="de.debuglevel.markdown.markdown-microservice.test" target="1.8" />
+      <module name="de.debuglevel.markdown.r-microservice.main" target="1.8" />
+      <module name="de.debuglevel.markdown.r-microservice.test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

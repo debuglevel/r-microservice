@@ -29,11 +29,11 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '4.0.4'
 }
 
-group 'de.debuglevel.markdown'
+group 'de.debuglevel.r'
 
 // application plugin configuration
-applicationName = "LaTeX Microservice"
-mainClassName = "de.debuglevel.latex.rest.MainKt"
+applicationName = "R Microservice"
+mainClassName = "de.debuglevel.r.rest.MainKt"
 
 repositories {
     jcenter()

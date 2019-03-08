@@ -13,7 +13,7 @@ COPY . /src/
 RUN ./gradlew build
 
 ## Final image
-FROM miktex/miktex
+FROM r-base:3.5.2
 RUN apt-get update && \
     apt-get install -y openjdk-8-jre-headless && \
     rm -rf /var/lib/apt/lists/*
