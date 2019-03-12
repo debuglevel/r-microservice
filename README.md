@@ -64,7 +64,7 @@ $ curl -X GET -H "Content-Type: application/json" -H "Accept: application/json" 
   "durationMilliseconds": 17598,
   "files": [
     {
-      "name": "output/results.csv",
+      "name": "output/people.csv",
       "base64data": "SSB3YXMgdG8gbGF6eSB0byBnZW5lcmF0ZSBhbiBhY3R1YWwgZXhhbXBsZS4gQnV0IG5pY2UgdGhhdCB5b3UgZGVjb2RlZCB0aGlzIQ=="
     }
   ],
