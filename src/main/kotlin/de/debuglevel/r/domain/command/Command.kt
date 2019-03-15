@@ -21,12 +21,20 @@ class Command(
 
         val startTime = System.currentTimeMillis()
         val process = processBuilder.start()
-        process.waitFor(300, TimeUnit.SECONDS)
+        val timedOut = process.waitFor(300, TimeUnit.SECONDS)
         val durationMilliseconds = System.currentTimeMillis() - startTime
+
+
+        val exitValue = try {
+            process.exitValue()
+        } catch (e: Exception) {
+            logger.warn(e) { "Could not retrieve exit value of process." }
+            -1
+        }
 
         val commandResult = CommandResult(
             this,
-            process.exitValue(),
+            exitValue,
             durationMilliseconds,
             process.inputStream.bufferedReader().readText()
         )
