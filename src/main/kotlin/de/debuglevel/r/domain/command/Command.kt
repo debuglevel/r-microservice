@@ -39,7 +39,11 @@ class Command(
             process.inputStream.bufferedReader().readText()
         )
 
-        logger.debug { "Running command '$command' finished: $commandResult" }
+        if (timedOut) {
+            logger.debug { "Running command '$command' timeouted: $commandResult" }
+        }else{
+            logger.debug { "Running command '$command' finished: $commandResult" }
+        }
 
         return commandResult
     }
