@@ -45,7 +45,7 @@ class Command(
             this,
             exitValue,
             durationMilliseconds,
-            process.inputStream.bufferedReader().readText()
+            output
         )
 
         if (timedOut) {
